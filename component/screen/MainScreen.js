@@ -14,11 +14,20 @@ import {
   Text,
   Button,
   StatusBar,
-  Alert,
   Image,
   TouchableOpacity,
   FlatList,
+  TextInput,
 } from 'react-native';
+
+import Modal, {
+  ModalTitle,
+  ModalContent,
+  ModalFooter,
+  ModalButton,
+  SlideAnimation,
+  ScaleAnimation,
+} from 'react-native-modals';
 
 import {
   Header,
@@ -31,6 +40,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ArticleListView from '../lists/listview/ArticleListView';
 import ArticleRow from '../lists/row/ArticleRow';
+import BottomModal from 'react-native-modals/dist/components/BottomModal';
+//mport { TextInput } from 'react-native-gesture-handler';
 
 this.states = {
   datas: [
@@ -113,9 +124,17 @@ this.states = {
         'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
     },
   ],
+  visibility:false,
 };
 
 function MainScreen({navigation}) {
+  state={
+    modalVisibility:false,
+  }
+  setModalVisibility=(isVisible)=>{
+    // this.setState({modalVisibility: isVisible})
+    navigation.navigate('AddKeyScreen')
+  }
   return (
     <>
       <SafeAreaView style={styles.background}>
@@ -123,8 +142,10 @@ function MainScreen({navigation}) {
         <ArticleListView style={styles.listView} itemList={this.states.datas} />
         <View style={styles.buttonLayout}>
           <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('AddKeyScreen')}>
+          onPress={this.states.visibility=true}
+            style={styles.button}>
+            {/* // // onPress={this.setModalVisibility(true)}> 
+            // //() => navigation.navigate('AddKeyScreen')}> */}
             <Image
               style={{height: 18, width: 18}}
               resizeMode="contain"
@@ -132,6 +153,32 @@ function MainScreen({navigation}) {
             />
           </TouchableOpacity>
         </View>
+        <Modal
+          visible={this.states.visibility}
+          width="0.7"
+          modalTitle={<ModalTitle title="추가하기" />}
+          footer={
+            <ModalFooter style={styles.modalFooter}>
+              <ModalButton
+                text="다음"
+                onPress={() => {}}
+              />
+              <ModalButton
+                text="취소"
+              />
+            </ModalFooter>
+          }
+        >
+          <ModalContent>
+            <View>
+              <Text>URL</Text>
+              <TextInput style={{backgroundColor:"#F0F"}}>fddddd</TextInput>
+              <View/>
+              <Text>키워드</Text>
+              <TextInput style={{backgroundColor:"#F0F"}}>fddddd</TextInput>
+            </View>
+          </ModalContent>
+        </Modal>
       </SafeAreaView>
     </>
   );
@@ -172,6 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-around',
   },
+  modalFooter:{
+    bottom:'0%',
+  }
 });
 
 export default MainScreen;

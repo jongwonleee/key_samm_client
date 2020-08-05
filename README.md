@@ -11,4 +11,6 @@ npm install @react-navigation/drawer
 
 npm install @react-navigation/stack 
 
+npm install --save react-native-modals
+
 npm pod-install ios
