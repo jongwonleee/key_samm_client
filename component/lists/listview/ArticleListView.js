@@ -18,6 +18,7 @@ const ArticleListView = ({ itemList }) => (
                     description={item.description}
                     image_url={item.image_url}
                 />}
+                keyExtractor={item => item.title}
             />
 
     </View>
