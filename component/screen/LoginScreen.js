@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -31,32 +31,31 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
 
 
-//const LoginScreen: () => React$Node = () => {
-function LoginScreen({navigation}) {
-  const onLoginButtonPress = () =>{
-    navigation.navigate('MainScreen')
-  }
-  return (
-    <>
-    <SafeAreaView style={styles.background}>
-    <StatusBar barStyle="dark-content" />
-      <View style={styles.logo}> 
-            <Text style={{fontSize:100, color:"#FFFFFF"}}>떴어?!</Text>
-      </View>
-      <TouchableOpacity 
-      onPress={() => navigation.navigate('MainScreen')}>
-        <View style={styles.button}>
-          { <Image style={{height:16, width:18, marginRight:6}}
-            resizeMode="contain"
-            source={require("./../images/kakao_talk_s.png")}/> }
-          <Text style={styles.text} allowFontScaling={true}>카카오톡으로 로그인</Text>
+export default class LoginScreen extends Component{
+  render(){
+    const {navigation} = this.props;
+    const onLoginButtonPress = () =>{
+      navigation.navigate('MainScreen')
+    }
+    return(
+      <SafeAreaView style={styles.background}>
+      <StatusBar barStyle="dark-content" />
+        <View style={styles.logo}> 
+              <Text style={{fontSize:100, color:"#FFFFFF"}}>떴어?!</Text>
         </View>
-        
-      </TouchableOpacity>
-    </SafeAreaView>
-    </>
-  );
-};
+        <TouchableOpacity 
+        onPress={() => navigation.navigate('MainScreen')}>
+          <View style={styles.button}>
+            { <Image style={{height:16, width:18, marginRight:6}}
+              resizeMode="contain"
+              source={require("./../images/kakao_talk_s.png")}/> }
+            <Text style={styles.text} allowFontScaling={true}>카카오톡으로 로그인</Text>
+          </View>
+        </TouchableOpacity>
+      </SafeAreaView>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container:{
@@ -89,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+//export default LoginScreen;

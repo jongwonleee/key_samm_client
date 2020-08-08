@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React,{Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -41,111 +41,104 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ArticleListView from '../lists/listview/ArticleListView';
 import ArticleRow from '../lists/row/ArticleRow';
 import BottomModal from 'react-native-modals/dist/components/BottomModal';
+import Input from '../customview/Input';
 //mport { TextInput } from 'react-native-gesture-handler';
 
-this.states = {
-  datas: [
-    {
-      title: '1',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '2',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '3',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '4',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '5',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '6',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '7',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '8',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '9',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '10',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '11',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '12',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-    {
-      title: '13',
-      description: 'description!!!',
-      img_url:
-        'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-    },
-  ],
-  visibility:false,
-};
-
-function MainScreen({navigation}) {
-  state={
-    modalVisibility:false,
-  }
-  setModalVisibility=(isVisible)=>{
-    // this.setState({modalVisibility: isVisible})
-    navigation.navigate('AddKeyScreen')
-  }
-  return (
-    <>
+export default class MainScreen extends Component{
+  state = {
+    datas: [
+      {
+        title: '1',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '2',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '3',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '4',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '5',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '6',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '7',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '8',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '9',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '10',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '11',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '12',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+      {
+        title: '13',
+        description: 'description!!!',
+        img_url:
+          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+      },
+    ],
+    visibility: false,
+  };
+  
+  render(){
+    const {navigation} = this.props;
+    return(
       <SafeAreaView style={styles.background}>
         <StatusBar barStyle="dark-content" />
-        <ArticleListView style={styles.listView} itemList={this.states.datas} />
+        <ArticleListView style={styles.listView} itemList={this.state.datas} />
         <View style={styles.buttonLayout}>
           <TouchableOpacity
-          onPress={this.states.visibility=true}
+            onPress={()=>{this.setState({visibility:true,});}}
             style={styles.button}>
-            {/* // // onPress={this.setModalVisibility(true)}> 
-            // //() => navigation.navigate('AddKeyScreen')}> */}
             <Image
               style={{height: 18, width: 18}}
               resizeMode="contain"
@@ -153,36 +146,95 @@ function MainScreen({navigation}) {
             />
           </TouchableOpacity>
         </View>
-        <Modal
-          visible={this.states.visibility}
-          width="0.7"
+        <BottomModal
+          visible={this.state.visibility}
           modalTitle={<ModalTitle title="추가하기" />}
           footer={
             <ModalFooter style={styles.modalFooter}>
-              <ModalButton
-                text="다음"
-                onPress={() => {}}
-              />
-              <ModalButton
-                text="취소"
-              />
+              <ModalButton text="다음" onPress={() => {}} />
+              <ModalButton text="취소" onPress={()=> this.setState({visibility:false})}/>
             </ModalFooter>
-          }
-        >
+          }>
           <ModalContent>
-            <View>
+            <View style={styles.modalContent}>
               <Text>URL</Text>
-              <TextInput style={{backgroundColor:"#F0F"}}>fddddd</TextInput>
-              <View/>
+              <Input
+                placeholder="URL"
+                style={styles.input}
+                pattern={[
+                  '/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi'
+                ]}
+                onValidation={() => this.setState({visibility:false})}
+              />
+              <View />
               <Text>키워드</Text>
-              <TextInput style={{backgroundColor:"#F0F"}}>fddddd</TextInput>
+              <Input
+                placeholder="Keyword"
+                style={styles.input}
+              />
             </View>
           </ModalContent>
-        </Modal>
+        </BottomModal>
       </SafeAreaView>
-    </>
-  );
+    )
+  }
 }
+
+// function MainScreen({navigation}) {
+//   const {visibility} = this.states;
+//   return (
+//     <>
+//       <SafeAreaView style={styles.background}>
+//         <StatusBar barStyle="dark-content" />
+//         <ArticleListView style={styles.listView} itemList={this.states.datas} />
+//         <View style={styles.buttonLayout}>
+//           <TouchableOpacity
+//             //onPress={visibility => this.setState({visibility})}
+//             style={styles.button}>
+//             {/* // // onPress={this.setModalVisibility(true)}> 
+//             // //() => navigation.navigate('AddKeyScreen')}> */}
+//             <Image
+//               style={{height: 18, width: 18}}
+//               resizeMode="contain"
+//               source={require('./../images/plus.png')}
+//             />
+//           </TouchableOpacity>
+//         </View>
+//         <BottomModal
+//           visible={true} //{this.states.visibility}
+//           modalTitle={<ModalTitle title="추가하기" />}
+//           footer={
+//             <ModalFooter style={styles.modalFooter}>
+//               <ModalButton text="다음" onPress={() => {}} />
+//               <ModalButton text="취소" />
+//             </ModalFooter>
+//           }>
+//           <ModalContent>
+//             <View style={styles.modalContent}>
+//               <Text>URL</Text>
+//               <Input
+//                 placeholder="URL"
+//                 style={styles.input}
+//                 pattern={[
+//                   '^.{8,}$', // min 8 chars
+//                   '(?=.*\\d)', // number required
+//                   '(?=.*[A-Z])', // uppercase letter
+//                 ]}
+//                 //onValidation={(isValid) => this.setState({isValid})}
+//               />
+//               <View />
+//               <Text>키워드</Text>
+//               <Input
+//                 placeholder="Keyword"
+//                 style={styles.input}
+//               />
+//             </View>
+//           </ModalContent>
+//         </BottomModal>
+//       </SafeAreaView>
+//     </>
+//   );
+// }
 
 const styles = StyleSheet.create({
   button: {
@@ -219,9 +271,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-around',
   },
-  modalFooter:{
-    bottom:'0%',
+  modalFooter: {
+    bottom: '0%',
+  },
+  modalContent: {
+    paddingTop: '5%',
+    paddingBottom: '5%',
+  },
+  input:{
+    fontSize:20,
+    padding:10,
   }
 });
 
-export default MainScreen;
+//export default MainScreen;
