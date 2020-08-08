@@ -18,6 +18,9 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Keyboard, 
+  TouchableWithoutFeedback,
+  Alert, 
 } from 'react-native';
 
 import Modal, {
@@ -42,7 +45,7 @@ import ArticleListView from '../lists/listview/ArticleListView';
 import ArticleRow from '../lists/row/ArticleRow';
 import BottomModal from 'react-native-modals/dist/components/BottomModal';
 import Input from '../customview/Input';
-//mport { TextInput } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class MainScreen extends Component{
   state = {
@@ -127,10 +130,40 @@ export default class MainScreen extends Component{
       },
     ],
     visibility: false,
+    keyboard:false,
   };
-  
+
   render(){
     const {navigation} = this.props;
+    const getHeight = () => {
+      return  this.state.keyboard ? '0%' : '50%';
+    };
+    const _onPressEmptySpace = () => {
+      Keyboard.dismiss();
+      this.setState({
+        keyboard: false,
+        visibility:false
+      });
+    }
+    const _onPressSubmit = () => {
+      Keyboard.dismiss();
+      this.setState({
+        keyboard: false,
+        visibility: false
+      });
+      navigation.navigate('WebScreen')
+    }
+
+    const _onInputFocus = () => {
+      this.setState({
+        keyboard:true,
+      });
+    }
+    const _onInputBlur = () => {
+      this.setState({
+        keyboard:false,
+      });
+    }
     return(
       <SafeAreaView style={styles.background}>
         <StatusBar barStyle="dark-content" />
@@ -146,97 +179,58 @@ export default class MainScreen extends Component{
             />
           </TouchableOpacity>
         </View>
-        <BottomModal
-          visible={this.state.visibility}
-          modalTitle={<ModalTitle title="추가하기" />}
-          footer={
-            <ModalFooter style={styles.modalFooter}>
-              <ModalButton text="다음" onPress={() => {}} />
-              <ModalButton text="취소" onPress={()=> this.setState({visibility:false})}/>
-            </ModalFooter>
-          }>
-          <ModalContent>
-            <View style={styles.modalContent}>
-              <Text>URL</Text>
-              <Input
-                placeholder="URL"
-                style={styles.input}
-                pattern={[
-                  '/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi'
-                ]}
-                onValidation={() => this.setState({visibility:false})}
-              />
-              <View />
-              <Text>키워드</Text>
-              <Input
-                placeholder="Keyword"
-                style={styles.input}
-              />
-            </View>
-          </ModalContent>
-        </BottomModal>
+          <BottomModal
+            visible={this.state.visibility}
+            onTouchOutside={this._onPressEmptySpace}
+            onSwipeOut={this._onPressEmptySpace}
+            modalTitle={<ModalTitle title="추가하기" />}
+            footer={
+              <ModalFooter style={this.state.keyboard?{
+                bottom: '22%',
+                }:styles.modalFooter}>
+                <ModalButton text="다음" onPress={_onPressSubmit} />
+                <ModalButton text="취소" onPress={_onPressEmptySpace}/>
+              </ModalFooter>
+            }>
+            <ModalContent>
+                <View style={this.state.keyboard?{
+                      paddingTop: '5%',
+                      paddingBottom: '5%',
+                      height: '55%',
+                }:styles.modalContent}>
+                <Text>URL</Text>
+                <Input
+                  placeholder="URL"
+                  style={styles.input}
+                  pattern={[
+                    '/(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi'
+                  ]}
+                  onFocus={_onInputFocus}
+                  onBlur={_onInputBlur}
+                  onValidation={() => Alert.alert("Wrong Format","Not a URL Format. Please Retry")}
+                />
+                <View />
+                <Text>키워드</Text>
+                <Input
+                  placeholder="Keyword"
+                  style={styles.input}
+                  onFocus={_onInputFocus}
+                  onBlur={_onInputBlur}
+                />
+                </View>
+            </ModalContent>
+          </BottomModal>
       </SafeAreaView>
     )
   }
 }
 
-// function MainScreen({navigation}) {
-//   const {visibility} = this.states;
-//   return (
-//     <>
-//       <SafeAreaView style={styles.background}>
-//         <StatusBar barStyle="dark-content" />
-//         <ArticleListView style={styles.listView} itemList={this.states.datas} />
-//         <View style={styles.buttonLayout}>
-//           <TouchableOpacity
-//             //onPress={visibility => this.setState({visibility})}
-//             style={styles.button}>
-//             {/* // // onPress={this.setModalVisibility(true)}> 
-//             // //() => navigation.navigate('AddKeyScreen')}> */}
-//             <Image
-//               style={{height: 18, width: 18}}
-//               resizeMode="contain"
-//               source={require('./../images/plus.png')}
-//             />
-//           </TouchableOpacity>
-//         </View>
-//         <BottomModal
-//           visible={true} //{this.states.visibility}
-//           modalTitle={<ModalTitle title="추가하기" />}
-//           footer={
-//             <ModalFooter style={styles.modalFooter}>
-//               <ModalButton text="다음" onPress={() => {}} />
-//               <ModalButton text="취소" />
-//             </ModalFooter>
-//           }>
-//           <ModalContent>
-//             <View style={styles.modalContent}>
-//               <Text>URL</Text>
-//               <Input
-//                 placeholder="URL"
-//                 style={styles.input}
-//                 pattern={[
-//                   '^.{8,}$', // min 8 chars
-//                   '(?=.*\\d)', // number required
-//                   '(?=.*[A-Z])', // uppercase letter
-//                 ]}
-//                 //onValidation={(isValid) => this.setState({isValid})}
-//               />
-//               <View />
-//               <Text>키워드</Text>
-//               <Input
-//                 placeholder="Keyword"
-//                 style={styles.input}
-//               />
-//             </View>
-//           </ModalContent>
-//         </BottomModal>
-//       </SafeAreaView>
-//     </>
-//   );
-// }
-
 const styles = StyleSheet.create({
+  keyboardView:{
+    position:'absolute',
+    width:'100%',
+    height:'100%',
+  },
   button: {
     justifyContent: 'flex-end',
     padding: 20,
@@ -277,6 +271,7 @@ const styles = StyleSheet.create({
   modalContent: {
     paddingTop: '5%',
     paddingBottom: '5%',
+    
   },
   input:{
     fontSize:20,
@@ -284,4 +279,3 @@ const styles = StyleSheet.create({
   }
 });
 
-//export default MainScreen;

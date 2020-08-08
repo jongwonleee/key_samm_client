@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -31,19 +31,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
 
 
-function AddKeyScreen({navigation}) {
-  const onLoginButtonPress = () =>{
-    navigation.navigate('MainScreen')
+export default class WebScreen extends Component{
+  render(){
+    const {navigation} = this.props;
+    const onLoginButtonPress = () =>{
+      navigation.navigate('MainScreen')
+    }
+    return(
+      <SafeAreaView style={styles.background}>
+      <StatusBar barStyle="dark-content" />
+      </SafeAreaView>
+    )
   }
-  return (
-    <>
-    <SafeAreaView style={styles.background}>
-    <StatusBar barStyle="dark-content" />
-
-    </SafeAreaView>
-    </>
-  );
-};
+}
 
 const styles = StyleSheet.create({
   container:{
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddKeyScreen;
+//export default LoginScreen;
