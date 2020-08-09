@@ -1,6 +1,12 @@
 
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { Component } from 'react';
+import { 
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    TouchableOpacity,
+    Linking} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -14,6 +20,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#FFF',
         elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
     },
     title: {
         fontSize: 16,
@@ -34,20 +47,31 @@ const styles = StyleSheet.create({
         width: 50,
     },
 });
+//const CustomRow = ({ url, keyword,index }) => (
+export default class CustomRow extends Component{
+    render(){
+        const { url, keyword,index } = this.props;
+        const _onPressRow= () => {
+            Linking.openURL(url).catch((err)=>console.error('An error occurred', err));
+          }
+        return(
+            <TouchableOpacity style={styles.container}
+            onPress={_onPressRow}
+            >
+                <Image source={{ uri: url }} style={styles.photo} />
+                <View style={styles.container_text}>
+                    <Text style={styles.title}>
+                        {url}
+                    </Text>
+                    <Text style={styles.description}>
+                        {keyword}
+                    </Text>
+                </View>
 
-const CustomRow = ({ title, description, image_url }) => (
-    <View style={styles.container}>
-        <Image source={{ uri: image_url }} style={styles.photo} />
-        <View style={styles.container_text}>
-            <Text style={styles.title}>
-                {title}
-            </Text>
-            <Text style={styles.description}>
-                {description}
-            </Text>
-        </View>
+            </TouchableOpacity>
+        )
+    }
+}
 
-    </View>
-);
 
-export default CustomRow;
+//export default CustomRow;

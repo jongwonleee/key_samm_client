@@ -51,86 +51,69 @@ export default class MainScreen extends Component{
   state = {
     datas: [
       {
-        title: '1',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:0,
+        url:'https://recruit.navercorp.com/naver/job/list/developer?searchSysComCd=&entTypeCd=004&searchTxt=',
+        keyword:'안드로이드',
       },
       {
-        title: '2',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:1,
+        url:'https://recruit.linepluscorp.com/lineplus/career/list?classId=148#null',
+        keyword:'인턴',
       },
       {
-        title: '3',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:2,
+        url:'https://recruit.nbp-corp.com/nbp/job/list/developer?entTypeCd=001&searchTxt=',
+        keyword:'인턴',
       },
       {
-        title: '4',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:3,
+        url:'https://recruit.webtoonscorp.com/webtoon/ko/job/list#',
+        keyword:'인턴',
       },
       {
-        title: '5',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:4,
+        url:'https://careers.kakao.com/jobs?skilset=Android',
+        keyword:'인턴',
       },
       {
-        title: '6',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:5,
+        url:'https://kakaoenterprise.recruiter.co.kr/app/jobnotice/list',
+        keyword:'인턴',
       },
       {
-        title: '7',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:6,
+        url:'https://recruit.navercorp.com/naver/job/list/developer?searchSysComCd=&entTypeCd=004&searchTxt=',
+        keyword:'안드로이드',
       },
       {
-        title: '8',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:7,
+        url:'https://recruit.linepluscorp.com/lineplus/career/list?classId=148#null',
+        keyword:'인턴',
       },
       {
-        title: '9',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:8,
+        url:'https://recruit.nbp-corp.com/nbp/job/list/developer?entTypeCd=001&searchTxt=',
+        keyword:'인턴',
       },
       {
-        title: '10',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:9,
+        url:'https://recruit.webtoonscorp.com/webtoon/ko/job/list#',
+        keyword:'인턴',
       },
       {
-        title: '11',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:10,
+        url:'https://careers.kakao.com/jobs?skilset=Android',
+        keyword:'인턴',
       },
       {
-        title: '12',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
-      },
-      {
-        title: '13',
-        description: 'description!!!',
-        img_url:
-          'https://dictionary.cambridge.org/ko/images/thumb/flower_noun_002_14403.jpg?version=5.0.107',
+        index:11,
+        url:'https://kakaoenterprise.recruiter.co.kr/app/jobnotice/list',
+        keyword:'인턴',
       },
     ],
     visibility: false,
     keyboard:false,
+    url:"",
   };
 
   render(){
@@ -151,7 +134,8 @@ export default class MainScreen extends Component{
         keyboard: false,
         visibility: false
       });
-      navigation.navigate('WebScreen')
+      if(!this.state.url.includes('http'))this.state.url = "https://"+this.state.url.toLowerCase()
+      navigation.navigate('WebScreen',{url:this.state.url})
     }
 
     const _onInputFocus = () => {
@@ -198,7 +182,7 @@ export default class MainScreen extends Component{
                       paddingBottom: '5%',
                       height: '55%',
                 }:styles.modalContent}>
-                <Text>URL</Text>
+                {/* <Text>URL</Text> */}
                 <Input
                   placeholder="URL"
                   style={styles.input}
@@ -207,10 +191,11 @@ export default class MainScreen extends Component{
                   ]}
                   onFocus={_onInputFocus}
                   onBlur={_onInputBlur}
-                  onValidation={() => Alert.alert("Wrong Format","Not a URL Format. Please Retry")}
+                  onChangeText={(url)=>this.setState({url:url})}
+                  //onValidation={() => Alert.alert("Wrong Format","Not a URL Format. Please Retry")}
                 />
                 <View />
-                <Text>키워드</Text>
+                {/* <Text>키워드</Text> */}
                 <Input
                   placeholder="Keyword"
                   style={styles.input}
@@ -226,11 +211,6 @@ export default class MainScreen extends Component{
 }
 
 const styles = StyleSheet.create({
-  keyboardView:{
-    position:'absolute',
-    width:'100%',
-    height:'100%',
-  },
   button: {
     justifyContent: 'flex-end',
     padding: 20,

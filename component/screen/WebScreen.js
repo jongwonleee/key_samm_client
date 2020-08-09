@@ -18,7 +18,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-
+import { WebView } from 'react-native-webview';
 import {
   Header,
   LearnMoreLinks,
@@ -32,15 +32,23 @@ import { useNavigation } from '@react-navigation/core';
 
 
 export default class WebScreen extends Component{
-  render(){
-    const {navigation} = this.props;
-    const onLoginButtonPress = () =>{
-      navigation.navigate('MainScreen')
+    state={
+        url:""
     }
+
+    // constructor(props){
+    //     super(props);
+    //     this.setState(url:JSON.stringify(url).replaceAll('\"',''))
+    // }
+  render(){
+    const {route,navigation} = this.props;
+    const { url } = route.params;
     return(
-      <SafeAreaView style={styles.background}>
-      <StatusBar barStyle="dark-content" />
-      </SafeAreaView>
+        //<Text>{JSON.stringify(url).replaceAll('\"','')}</Text>
+        <WebView
+        source={{uri:JSON.stringify(url).replaceAll('\"','')}}
+        style={{marginTop: 20}}
+        />
     )
   }
 }
@@ -50,29 +58,11 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     flex:1
   },
-  logo:{
-    flex: 1,
-    justifyContent:"center",
-    alignItems:'center',
-  },
-  button:{
-    justifyContent:"center",
-    alignItems:"center",
-    bottom:"30%",
-    backgroundColor:"#fee933",
-    padding:17,
-    margin:20,
-    flexDirection:"row",
-    borderRadius:4,
-  },
-  text:{
-    fontSize:14,
-    color:"#371e1e",
-    fontWeight:"bold",
-  },
-  background:{
-    backgroundColor:"#184C88",
-    flex:1
+  webView:{
+      flex:1,
+      width:'100%',
+      height:'100%',
+      position:"absolute",
   },
 });
 

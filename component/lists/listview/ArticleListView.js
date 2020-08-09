@@ -14,11 +14,10 @@ const ArticleListView = ({ itemList }) => (
         <FlatList
                 data={itemList}
                 renderItem={({ item }) => <ArticleRow
-                    title={item.title}
-                    description={item.description}
-                    image_url={item.image_url}
+                    url={item.url}
+                    keyword={item.keyword}
                 />}
-                keyExtractor={item => item.title}
+                keyExtractor={item => item.index}
             />
 
     </View>
