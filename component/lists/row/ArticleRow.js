@@ -90,7 +90,9 @@ export default class CustomRow extends Component{
         const _onPressRow= () => {
             Linking.openURL(url).catch((err)=>console.error('An error occurred', err));
         }
-        this.crawler(url);
+        if(this.state.title.length==0){
+            this.crawler(url);
+        }
         return(
             <TouchableOpacity style={styles.container}
             onPress={_onPressRow}

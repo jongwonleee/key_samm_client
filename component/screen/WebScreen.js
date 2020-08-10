@@ -36,20 +36,34 @@ export default class WebScreen extends Component{
         url:""
     }
 
-    // constructor(props){
-    //     super(props);
-    //     this.setState(url:JSON.stringify(url).replaceAll('\"',''))
-    // }
-  render(){
-    const {route,navigation} = this.props;
-    const { url } = route.params;
-    return(
-        //<Text>{JSON.stringify(url).replaceAll('\"','')}</Text>
-        <WebView
-        source={{uri:JSON.stringify(url).replaceAll('\"','')}}
-        style={{marginTop: 20}}
-        />
-    )
+    render(){
+        const {route,navigation} = this.props;
+        const { url } = route.params;
+        let  jsCode = `
+        Array.from(document.querySelectorAll('a')).forEach(li => {
+            li.style.backgroundColor='red';
+            li.addEventListener('click', evt => {
+                
+                while(li.className==""){
+                    li = li.parentNode;
+                }
+                alert(li.className);
+              })
+        })
+     `;
+        return(
+            <WebView
+            source={{uri:"https://recruit.linepluscorp.com/lineplus/career/list?classId=148#null"}}//{{uri:JSON.stringify(url).replaceAll('\"','')}}
+            style={{marginTop: 20}}
+            javaScriptEnabled={true}
+            javaScriptEnabledAndroid={true}
+            injectedJavaScript={'function injectRules() {' + jsCode+ '};injectRules();'}
+
+            onMessage={(event) => {
+                console.log('event: ', event)
+              }}
+            />
+        )
   }
 }
 
@@ -65,5 +79,3 @@ const styles = StyleSheet.create({
       position:"absolute",
   },
 });
-
-//export default LoginScreen;
