@@ -17,4 +17,8 @@ npm install --save react-native-modals
 
 npm install --save react-native-webview 
 
-npm pod-install ios
+npm install react-native-cheerio
+
+npm install -save axios
+
+npx pod-install ios
