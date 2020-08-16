@@ -40,16 +40,32 @@ export default class WebScreen extends Component{
         const {route,navigation} = this.props;
         const { url } = route.params;
         let  jsCode = `
-        Array.from(document.querySelectorAll('a')).forEach(li => {
-            li.style.backgroundColor='red';
-            li.addEventListener('click', evt => {
-                
-                while(li.className==""){
-                    li = li.parentNode;
-                }
-                alert(li.className);
-              })
-        })
+        function injectRules() {
+            Array.from(document.querySelectorAll('a')).forEach(li => {
+                //li.href='';
+                li.addEventListener('click', evt => {
+                    evt.preventDefault();
+                });
+                li.addEventListener('mousedown', evt => {
+                    while(li.className==""){
+                        li = li.parentNode;
+                    }
+                    let origin = li;
+                    li.style.borderWidth= "thick";
+                    li.style.borderColor='red';
+                    li.style.backgroundColor='#EEEEEE';
+                    setTimeout(function() { 
+                        var r = confirm("화면에 표시된 부분이 맞으면 OK을 눌러주세요.");
+                        if(r==true) {
+                            window.ReactNativeWebView.postMessage(li.className);
+                        }else{
+                            li.style= origin.style;
+                        }
+                    }, 200);
+                });       
+            })
+        };
+        injectRules();
      `;
         return(
             <WebView
@@ -57,10 +73,11 @@ export default class WebScreen extends Component{
             style={{marginTop: 20}}
             javaScriptEnabled={true}
             javaScriptEnabledAndroid={true}
-            injectedJavaScript={'function injectRules() {' + jsCode+ '};injectRules();'}
+            injectedJavaScript={jsCode}
 
             onMessage={(event) => {
-                console.log('event: ', event)
+                Alert.alert("화면에 추가되었습니다.",event.nativeEvent.data);
+                navigation.goBack();
               }}
             />
         )
