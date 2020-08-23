@@ -37,8 +37,9 @@ export default class WebScreen extends Component{
     }
 
     render(){
+        Alert.alert("","키워드가 검출될 수 있는 부분을 눌러주세요");
         const {route,navigation} = this.props;
-        const { url } = route.params;
+        const { url,onSelect } = route.params;
         let  jsCode = `
         function injectRules() {
             Array.from(document.querySelectorAll('a')).forEach(li => {
@@ -68,18 +69,23 @@ export default class WebScreen extends Component{
         injectRules();
      `;
         return(
-            <WebView
-            source={{uri:"https://recruit.linepluscorp.com/lineplus/career/list?classId=148#null"}}//{{uri:JSON.stringify(url).replaceAll('\"','')}}
-            style={{marginTop: 20}}
-            javaScriptEnabled={true}
-            javaScriptEnabledAndroid={true}
-            injectedJavaScript={jsCode}
+            <View style={styles.container}>
+                <WebView
+                source={{uri:"https://recruit.linepluscorp.com/lineplus/career/list?classId=148#null"}}//{{uri:JSON.stringify(url).replaceAll('\"','')}}
+                javaScriptEnabled={true}
+                javaScriptEnabledAndroid={true}
+                injectedJavaScript={jsCode}
 
-            onMessage={(event) => {
-                Alert.alert("화면에 추가되었습니다.",event.nativeEvent.data);
-                navigation.goBack();
-              }}
-            />
+                onMessage={(event) => {
+                    //Alert.alert("화면에 추가되었습니다.",event.nativeEvent.data);
+                    this.props.route.params.onSelect(event.nativeEvent.data);
+                    //navigation.get
+                    //this.props.navigation.state.params.onSelect("!!");
+                    navigation.goBack();
+                }}
+                />
+            </View>
+            
         )
   }
 }

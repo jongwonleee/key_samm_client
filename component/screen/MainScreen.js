@@ -115,6 +115,9 @@ export default class MainScreen extends Component{
     keyboard:false,
     url:"",
   };
+  onSelect = id=>{
+    Alert.alert(id);
+  }
 
   render(){
     const {navigation} = this.props;
@@ -135,8 +138,12 @@ export default class MainScreen extends Component{
         visibility: false
       });
       if(!this.state.url.includes('http'))this.state.url = "https://"+this.state.url.toLowerCase()
-      navigation.navigate('WebScreen',{url:this.state.url})
+      navigation.navigate('WebScreen',
+      {url:this.state.url,
+      onSelect:this.onSelect})
     }
+    
+
 
     const _onInputFocus = () => {
       this.setState({
